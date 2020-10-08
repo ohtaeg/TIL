@@ -5,7 +5,9 @@ Today I Learned
 
 모임 스터디나 프로젝트성 공부는 별도의 Repository로 관리합니다.
 
-## HTTP
-- [MIME](https://github.com/ohtaeg/TIL/blob/master/http/MIME.md)
-- [HTTP Header](https://github.com/ohtaeg/TIL/blob/master/http/HttpHeader.md)
-- [Web Cache](https://github.com/ohtaeg/TIL/blob/master/http/Web_Cache.md))
+## 네트워크
+- 책 모두의 네트워크 정리
+- HTTP
+    - [MIME](https://github.com/ohtaeg/TIL/blob/master/http/MIME.md)
+    - [HTTP Header](https://github.com/ohtaeg/TIL/blob/master/http/HttpHeader.md)
+    - [Web Cache](https://github.com/ohtaeg/TIL/blob/master/http/Web_Cache.md)
