@@ -6,7 +6,10 @@ Today I Learned
 모임 스터디나 프로젝트성 공부는 별도의 Repository로 관리합니다.
 
 ## 네트워크
-- 책 모두의 네트워크 정리
+- 모두의 네트워크
+    - [Chapter1. 네트워크 첫걸음](./network/모두의네트워크/1_네트워크첫걸음.md)
+    - [Chapter2. 네트워크 기본 규칙](./network/모두의네트워크/2_네트워크의기본규칙.md)
+    
 - HTTP
     - [MIME](https://github.com/ohtaeg/TIL/blob/master/http/MIME.md)
     - [HTTP Header](https://github.com/ohtaeg/TIL/blob/master/http/HttpHeader.md)
