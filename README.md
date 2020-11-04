@@ -16,6 +16,6 @@ Today I Learned
     - [Chapter7. 응용 계층](./network/모두의네트워크/7_응용계층.md)
     
 - HTTP
-    - [MIME](https://github.com/ohtaeg/TIL/blob/master/http/MIME.md)
-    - [HTTP Header](https://github.com/ohtaeg/TIL/blob/master/http/HttpHeader.md)
-    - [Web Cache](https://github.com/ohtaeg/TIL/blob/master/http/Web_Cache.md)
+    - [MIME](./network/http/MIME.md)
+    - [HTTP Header](./network/http/HttpHeader.md)
+    - [Web Cache](./network/http/Web_Cache.md)
