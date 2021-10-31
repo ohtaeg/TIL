@@ -1,0 +1,12 @@
+@startuml
+interface ReminderStrategy {
+  + {abstract} isNow()
+}
+
+class TimeReminderStrategy implements ReminderStrategy {
+  + isNow()
+}
+
+TimeReminder *-- ReminderStrategy
+TimeReminder *-- MP3
+@enduml

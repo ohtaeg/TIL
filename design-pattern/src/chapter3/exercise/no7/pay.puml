@@ -1,0 +1,12 @@
+@startuml
+interface PayPrinter {
+    + {abstract} printer(List<Employee> e);
+}
+
+class PayConsolePrinter implements PayPrinter {
+    + printer(List<Employee> e);
+}
+
+
+PayrollManger ..> PayPrinter
+@enduml

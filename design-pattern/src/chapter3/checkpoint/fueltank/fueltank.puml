@@ -1,0 +1,15 @@
+@startuml
+
+interface Monitorable {
+  + {abstract} check()
+  + {abstract} warn()
+}
+
+class FuelTank implements Monitorable {
+  - admins
+  + check()
+  + warn()
+}
+
+FuelTank *-- Admin
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+
+
+toy <|-- robot
+kid *-- toy
+
+@enduml

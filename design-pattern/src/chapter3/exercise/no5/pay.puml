@@ -1,0 +1,15 @@
+@startuml
+interface PayPolicy {
+    + {abstract} calculate(Employee e);
+}
+
+class HourPolicy implements PayPolicy {
+    + calculate(Employee);
+}
+
+class MonthPolicy implements PayPolicy {
+    + calculate(Employee);
+}
+
+Employee *-- PayPolicy
+@enduml
