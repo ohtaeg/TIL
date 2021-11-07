@@ -1,0 +1,21 @@
+@startuml
+autonumber "<font color=blue><b>0"
+client -> A1 : doA1()
+
+activate A1
+A1 -> A1 : create A2()
+A1 -> A2 : doA2(this)
+
+activate A2
+A2 -> A1 : doIt()
+
+deactivate A2
+A1 -> A1 : create A3()
+A1 -> A3 : doA3(a2)
+
+activate A3
+A3 -> A2 : doThat()
+
+deactivate A3
+deactivate A1
+@enduml

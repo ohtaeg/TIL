@@ -1,0 +1,22 @@
+@startuml
+
+Client -> GUI : init()
+
+activate GUI
+GUI -> GUI : this:setLayout(new GridLayout())
+GUI -> GUI : p1:create Panel(new BorderLayOut())
+
+activate GUI #FFBBBB
+GUI -> Panel : add("West", w)
+GUI -> Panel : add("Center", c)
+deactivate GUI
+
+GUI -> GUI : p2:create Panel(new FlowLayout(FlowLayout.CENTER))
+
+activate GUI #DarkSalmon
+GUI -> Panel : add(b)
+deactivate GUI
+GUI -> GUI : this.add(p2)
+
+
+@enduml
