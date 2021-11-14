@@ -1,7 +1,7 @@
-package chapter5_strategy.exercise.no3;
+package chapter5_strategy.exercise.no3.rental;
 
-import chapter5_strategy.exercise.no3.discount.DiscountStrategy;
-import chapter5_strategy.exercise.no3.discount.DiscounterFactory;
+import chapter5_strategy.exercise.no3.rental.discount.DiscountStrategy;
+import chapter5_strategy.exercise.no3.rental.discount.DiscounterFactory;
 
 public class Member {
     private String name;

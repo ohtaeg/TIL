@@ -1,4 +1,4 @@
-package chapter5_strategy.exercise.no3;
+package chapter5_strategy.exercise.no3.rental;
 
 public class Book {
     private String name;
