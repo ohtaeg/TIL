@@ -10,7 +10,7 @@
 
 <br>
 
-![class-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/chapter5_strategy/uml/strategy.puml)
+![class-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter5_strategy/uml/strategy.puml)
 
 - Context : 스트래티지 패턴을 사용하는 녀셕, 필요에 따라 구체적인 전략을 동적으로 바꿀 수 있는 메서드 제공해야한다.
 - Strategy : 인터페이스나 추상 클래스로 외부에서 동일한 방식으로 알고리즘을 호출하는 방법을 명시
