@@ -1,0 +1,27 @@
+@startuml
+interface DiscounterFactory {
+  + {abstract} getDiscounter(Member, Book)
+}
+
+class SimpleDiscounterFactory implements DiscounterFactory {
+  + getDiscounter(Member, Book)
+}
+
+interface DiscountStrategy {
+  + {abstract} discount(Book)
+}
+
+class OldBookDiscountStrategy implements DiscountStrategy{
+  + {abstract} discount(Book)
+}
+
+class MemberDiscountStrategy implements DiscountStrategy{
+  + {abstract} discount(Book)
+}
+
+Member o--> DiscounterFactory
+Member -> Book
+DiscounterFactory  -> DiscountStrategy
+
+
+@enduml

@@ -9,7 +9,10 @@ Today I Learned
 
 ## 디자인 패턴
 - JAVA 객체지향 디자인 패턴
-  -  [Chapter3. SOLID](./design-pattern/src/chapter3/README.md)
+  - [Chapter3. SOLID](./design-pattern/src/chapter3)
+  - [Chapter4. 디자인패턴](./design-pattern/src/chapter4)
+  - [Chapter5. 전략패턴](./design-pattern/src/chapter5_strategy)
+  
 ## 네트워크
 - 모두의 네트워크
     - [Chapter1. 네트워크 첫걸음](./network/모두의네트워크/1_네트워크첫걸음.md)
