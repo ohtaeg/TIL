@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class DrawStrategy {
+    + {abstract} draw(Ball)
+}
+class RedDrawStrategy extends DrawStrategy {
+    + {abstract} draw(Ball)
+}
+abstract class DirectionStrategy {
+    + {abstract} move(Ball)
+}
+class HorizontalMoveStrategy extends DirectionStrategy {
+    + {abstract} move(Ball)
+}
+
+
+Client ..> DrawStrategy
+Client ..> DirectionStrategy
+Client ..> Ball
+Client ..> BallFrame
+
+BallFrame ..> Ball
+BallFrame *-- Field
+
+
+@enduml
