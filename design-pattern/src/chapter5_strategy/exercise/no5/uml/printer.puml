@@ -1,0 +1,19 @@
+@startuml
+interface Printer {
+    + {abstract} print(String)
+}
+
+class SimplePrinter implements Printer {
+    + {abstract} print(String)
+}
+
+class HD108ReceiptPrinter implements Printer {
+    + {abstract} print(String)
+}
+
+Client ..> Item
+Client ..> Sale
+
+Sale ..> Item
+Sale *--> Printer
+@enduml

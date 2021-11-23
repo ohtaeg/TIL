@@ -15,8 +15,8 @@ class HorizontalMoveStrategy extends DirectionStrategy {
 }
 
 
-Client ..> DrawStrategy
-Client ..> DirectionStrategy
+Client *--> DrawStrategy
+Client *--> DirectionStrategy
 Client ..> Ball
 Client ..> BallFrame
 
