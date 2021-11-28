@@ -1,0 +1,15 @@
+@startuml
+@startuml
+Participant Client
+Participant Singleton <<metaclass>>
+
+Client -> Singleton : getInstance()
+
+== Initialization ==
+
+group opt
+    ... instance == null ...
+    Singleton -> Singleton_Instance : <<create>>
+end
+@enduml
+@enduml
