@@ -1,0 +1,25 @@
+@startuml
+
+class Context {
+    - State state
+
+    + Context(State)
+    + changeState(State)
+    + operation()
+}
+
+interface State {
+    + {abstract} operation()
+}
+
+class ConcreteState implements State {
+    + setContext(Context)
+    + operation()
+}
+
+Client -> Context
+Context o-> State
+
+ConcreteState -> Context
+
+@enduml
