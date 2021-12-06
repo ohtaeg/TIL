@@ -1,4 +1,4 @@
-package chapter7_state.exercise.no5.beverage;
+package chapter7_state.exercise.vending_machine.beverage;
 
 public class Selling implements BeverageState {
 

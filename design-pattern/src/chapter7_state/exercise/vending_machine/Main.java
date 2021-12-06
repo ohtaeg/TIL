@@ -1,6 +1,6 @@
-package chapter7_state.exercise.no5;
+package chapter7_state.exercise.vending_machine;
 
-import chapter7_state.exercise.no5.beverage.Beverage;
+import chapter7_state.exercise.vending_machine.beverage.Beverage;
 import java.util.HashMap;
 import java.util.Map;
 

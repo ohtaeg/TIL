@@ -1,4 +1,4 @@
-package chapter7_state.exercise.no5.money;
+package chapter7_state.exercise.vending_machine.money;
 
 public interface MoneyState {
 

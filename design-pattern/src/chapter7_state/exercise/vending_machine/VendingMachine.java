@@ -1,8 +1,8 @@
-package chapter7_state.exercise.no5;
+package chapter7_state.exercise.vending_machine;
 
-import chapter7_state.exercise.no5.beverage.Beverage;
-import chapter7_state.exercise.no5.money.MoneyState;
-import chapter7_state.exercise.no5.money.Waiting;
+import chapter7_state.exercise.vending_machine.beverage.Beverage;
+import chapter7_state.exercise.vending_machine.money.MoneyState;
+import chapter7_state.exercise.vending_machine.money.Waiting;
 import java.util.Map;
 
 public class VendingMachine {
