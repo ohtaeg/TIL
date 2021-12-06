@@ -4,20 +4,31 @@ public class Beverage {
 
     private int price;
     private String name;
-    private int stock;
+    private BeverageState beverageState;
 
     public Beverage(final int price, final String name, final int stock) {
         this.price = price;
         this.name = name;
-        this.stock = stock;
+        this.beverageState = findState(stock);
+    }
+
+    private BeverageState findState(final int stock) {
+        if (stock > 0) {
+            return new Selling(stock);
+        }
+        return new SoldOut();
     }
 
     public boolean isSoldOut() {
-        return stock <= 0;
+        return beverageState.isSoldOut();
     }
 
     public void subtractStock() {
-        this.stock -= 1;
+        this.beverageState = this.beverageState.subtractStock();
+    }
+
+    public void refill(final int stock) {
+        this.beverageState = this.beverageState.refill(stock);
     }
 
     public boolean canSell(final int money) {
@@ -26,10 +37,6 @@ public class Beverage {
 
     public void setPrice(final int price) {
         this.price = price;
-    }
-
-    public void refill(final int stock) {
-        this.stock += stock;
     }
 
     public int getPrice() {
@@ -41,7 +48,6 @@ public class Beverage {
         return "Beverage{" +
             "price=" + price +
             ", name='" + name + '\'' +
-            ", stock=" + stock +
             '}';
     }
 }
