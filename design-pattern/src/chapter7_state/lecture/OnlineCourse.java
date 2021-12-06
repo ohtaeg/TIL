@@ -40,6 +40,10 @@ public class OnlineCourse {
         }
     }
 
+    private boolean availableTo(final Student student) {
+        return true;
+    }
+
     public void changeState(State newState) {
         this.state = newState;
     }

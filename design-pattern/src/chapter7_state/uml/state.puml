@@ -12,14 +12,17 @@ interface State {
     + {abstract} operation()
 }
 
-class ConcreteState implements State {
+class ConcreteState1 implements State {
+    + setContext(Context)
+    + operation()
+}
+
+class ConcreteState2 implements State {
     + setContext(Context)
     + operation()
 }
 
 Client -> Context
 Context o-> State
-
-ConcreteState -> Context
 
 @enduml
