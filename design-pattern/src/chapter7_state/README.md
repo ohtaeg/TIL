@@ -10,7 +10,7 @@
 
 <br>
 
-![sequence-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter7_state/uml/powerSwitch.puml)
+![sequence-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter7_state/uml/state.puml)
 
 <br>
 
