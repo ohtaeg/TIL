@@ -1,4 +1,4 @@
-package chapter7_state.lecture;
+package chapter7_state.lecture.before;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +34,13 @@ public class OnlineCourse {
             throw new UnsupportedOperationException("학생을 해당 수업에 추가할 수 없습니다.");
         }
 
-        // 문제
-        if (this.students.size() > 4) {
+        if (this.students.size() > 1) {
             changeState(State.PRIVATE);
         }
     }
 
     private boolean availableTo(final Student student) {
-        return true;
+        return false;
     }
 
     public void changeState(State newState) {
@@ -50,5 +49,13 @@ public class OnlineCourse {
 
     public State getState() {
         return state;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<String> getReviews() {
+        return reviews;
     }
 }
