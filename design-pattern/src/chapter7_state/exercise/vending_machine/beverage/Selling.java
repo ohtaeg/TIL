@@ -1,6 +1,6 @@
 package chapter7_state.exercise.vending_machine.beverage;
 
-public class Selling implements BeverageState {
+public class Selling implements SaleState {
 
     private int stock;
 
@@ -14,7 +14,7 @@ public class Selling implements BeverageState {
     }
 
     @Override
-    public BeverageState subtractStock() {
+    public SaleState subtractStock() {
         this.stock -= 1;
         if (stock == 0) {
             return new SoldOut();
@@ -23,7 +23,7 @@ public class Selling implements BeverageState {
     }
 
     @Override
-    public BeverageState refill(final int stock) {
+    public SaleState refill(final int stock) {
         this.stock += stock;
         return this;
     }
