@@ -14,6 +14,7 @@ Today I Learned
   - [Chapter5. 전략패턴](./design-pattern/src/chapter5_strategy)
   - [Chapter6. 싱글톤패턴](./design-pattern/src/chapter6_singleton)
   - [Chapter7. 상태패턴](./design-pattern/src/chapter7_state)
+  - [Chapter8. 커맨드패턴](./design-pattern/src/chapter8_command)
   
 ## 네트워크
 - 모두의 네트워크
