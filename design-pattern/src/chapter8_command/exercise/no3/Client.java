@@ -20,12 +20,12 @@ public class Client {
         ElevatorButton elevatorButton= new ElevatorButton(destinationCommand1st);
         elevatorButton.press();
 
-
-        // 2층에서 아래로, 어떤 컨트롤러가 와야할까? 가장 가까운 컨트롤러
-        Command destinationCommand2nd = new DestinationSelectionCommand(2, controller2);
+        // 4층에서 2번 엘베
+        Command destinationCommand2nd = new DestinationSelectionCommand(4, controller2);
         elevatorButton= new ElevatorButton(destinationCommand2nd);
         elevatorButton.press();
 
+        // 목적지 2층에서 아래 버튼 눌렀을 때 어떤 엘베가 와야할까? = 가장 가까운 엘베
         Command requestDownCommand = new ElevatorRequestCommand(2, Direction.DOWN, manager);
         elevatorButton= new ElevatorButton(requestDownCommand);
         elevatorButton.press();
