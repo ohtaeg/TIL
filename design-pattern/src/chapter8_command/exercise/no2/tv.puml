@@ -1,0 +1,34 @@
+@startuml
+
+class TwoButtonController {
+    __ constructor __
+    + TwoButtonController(Tv)
+    __
+    + void button1Pressed()
+    + void button2Pressed()
+}
+
+interface Command {
+    + {abstract} void execute()
+}
+
+class PowerCommand implements Command {
+    + void execute()
+}
+
+class MuteCommand implements Command {
+    + void execute()
+}
+
+class Tv {
+    - powerOn boolean = false
+    - muteOn boolean = false
+    + void power()
+    + void mute()
+}
+
+TwoButtonController -right-> Command
+PowerCommand --> Tv
+MuteCommand --> Tv
+
+@enduml
