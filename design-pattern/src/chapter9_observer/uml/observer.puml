@@ -8,8 +8,9 @@ class ConcreteObserver implements Observer {
 }
 
 abstract class Subject {
-    + void attach(Observer)
-    + void detach(Observer)
+    # List<Observer> observers
+    + void subscribe(Observer)
+    + void unsubscribe(Observer)
     + void notify()
 }
 
