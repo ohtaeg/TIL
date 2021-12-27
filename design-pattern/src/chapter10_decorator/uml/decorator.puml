@@ -1,0 +1,27 @@
+@startuml
+class Component {
+    + {abstract} void operation()
+}
+
+class ConcreteComponent extends Component {
+    + void operation()
+}
+
+class Decorator extends Component {
+    - Component component
+    + void operation()
+}
+note on link : component.operation()
+
+class ConcreteDecoratorA extends Decorator {
+    + void operation()
+    - void doOperationA()
+}
+
+class ConcreteDecoratorB extends Decorator {
+    + void operation()
+    - void doOperationB()
+}
+
+
+@enduml
