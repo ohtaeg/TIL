@@ -1,5 +1,6 @@
 # 데코레이터 패턴
-- 기존 코드를 변경하지 않으면서 부가적인 기능을 동적으로 추가할 수 있는 패턴
+- 동일한 타입의 객체를 품고 있으며, 기존 코드를 변경하지 않으면서 부가적인 기능을 동적으로 추가할 수 있는 패턴
+- 즉, 추가된 기능을 구현한 객체가 기본 기능을 구현한 클래스를 인자로 받아서 이용함으로써 기능의 확장이나 변경을 수행하는 패턴이다.
 - 장점 
   - 기능 조합 별로 경우의 수에 맞게 클래스를 생성하지 않아도 된다.
 - 단점
@@ -94,7 +95,8 @@ public class RoadDisplayWithLaneTraffic extends RoadDisplay {
   - `DataInputStream dis = new DataInputStream(new FileInputStream(""));`
   - ![class-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter10_decorator/uml/inputstream.puml)
   - http://stg-tud.github.io/sedc/Lecture/ws13-14/5.3-Decorator.html#mode=document
-- java.util.Collections, the checkedXXX(), synchronizedXXX() and unmodifiableXXX() methods.
+- [java.util.Collections, the checkedXXX(), synchronizedXXX() and unmodifiableXXX() methods](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html)
+  - `List<String> list = Collections.synchronizedList(new ArrayList<String>());`
 - [javax.servlet.http.HttpServletRequestWrapper and HttpServletResponseWrapper](https://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequestWrapper.html)
 
 ### Decorator pattern in spring
