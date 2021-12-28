@@ -1,0 +1,21 @@
+@startuml
+
+
+abstract class InputStream
+class FileInputStream extends InputStream
+note on link : Concrete Component
+class StringBufferInputStream extends InputStream
+note on link : Concrete Component
+class ByteArrayInputStream extends InputStream
+note on link : Concrete Component
+
+class FilterInputStream extends InputStream
+note on link : Abstract Decorator
+class PushbackInputStream extends FilterInputStream
+note on link : Concrete Decorator
+class BufferdInputStream extends FilterInputStream
+note on link : Concrete Decorator
+class DataInputStream extends FilterInputStream
+note on link : Concrete Decorator
+
+@enduml

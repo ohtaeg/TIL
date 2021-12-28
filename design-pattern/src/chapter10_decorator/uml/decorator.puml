@@ -1,5 +1,5 @@
 @startuml
-class Component {
+interface Component {
     + {abstract} void operation()
 }
 
@@ -8,7 +8,7 @@ class ConcreteComponent extends Component {
 }
 
 class Decorator extends Component {
-    - Component component
+    - Component wrappee
     + void operation()
 }
 note on link : component.operation()
@@ -23,5 +23,6 @@ class ConcreteDecoratorB extends Decorator {
     - void doOperationB()
 }
 
+Client -right-> Component
 
 @enduml
