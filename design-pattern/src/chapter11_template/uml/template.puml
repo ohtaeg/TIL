@@ -1,0 +1,13 @@
+@startuml
+
+abstract class AbstractClass {
+    + templateMethod()
+    + step1()
+    + step2()
+}
+
+class ConcreteClass extends AbstractClass {
+    + step1()
+    + step2()
+}
+@enduml

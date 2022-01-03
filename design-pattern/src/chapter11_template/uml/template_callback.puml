@@ -1,0 +1,19 @@
+@startuml
+
+abstract class AbstractClass {
+    + templateMethod(Callback)
+    + step1()
+    + step2()
+}
+
+interface Callback {
+    + operation()
+}
+
+class ConcreteCallback implements Callback {
+    + operation()
+}
+
+AbstractClass o-right-> Callback
+
+@enduml
