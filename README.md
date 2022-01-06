@@ -18,6 +18,7 @@ Today I Learned
   - [Chapter9. 옵저버패턴](./design-pattern/src/chapter9_observer)
   - [Chapter10. 데코레이터패턴](./design-pattern/src/chapter10_decorator)
   - [Chapter11. 템플릿메서드패턴](./design-pattern/src/chapter11_template)
+  - [Chapter12. 팩토리메서드패턴](./design-pattern/src/chapter12_factory_method)
   
 ## 네트워크
 - 모두의 네트워크

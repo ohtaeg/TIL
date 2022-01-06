@@ -1,0 +1,17 @@
+@startuml
+interface Creator {
+    + {abstract} templateMethod()
+    + {abstract} Product createProduct()
+}
+
+interface Product
+
+class ConcreteProduct implements Product {}
+
+class ConcreteCreator implements Creator {
+    + Product createProduct()
+}
+
+Creator -right-> Product : Use
+
+@enduml
