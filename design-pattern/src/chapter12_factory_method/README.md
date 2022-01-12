@@ -1,11 +1,20 @@
 # 팩토리 메서드 패턴
-
 - 객체의 생성과 관련된 패턴
 - 어떤 인스턴스를 생성하는 책임을 구체적인 클래스가 아니라 추상적인 인터페이스의 메서드로 감싸는 패턴
 - 어떤 인스턴스를 만들지는 Factory 서브 클래스가 정한다.
+- 기능의 변경이나 상황에 따라 객체를 선택 해야할 시 객체를 생성하는 코드의 잦은 변경을 초래한다.
+- 그렇기에 객체 생성 코드를 별도의 클래스 / 메서드로 분리한다면 클래스 / 메서드만 변경함으로써 객체 생성 방식에 변화에 대처할 수 있다.
 - 다양한 구현체 (Product)가 있을 때, 특정한 구현체를 만들 수 있는 다양한 팩토리(Creator)를 제공할 수 있다.
 
-![class-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter12_factory-method/uml/factory-method.puml)
+
+![class-diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/ohtaeg/TIL/master/design-pattern/src/chapter12_factory_method/uml/factory-method.puml)
+- Creator : 팩토리 메서드를 갖는 클래스
+- ConcreteCreator : 팩토리 메서드를 구현하는 클래스, ConcreteProduct 객체를 생성한다.
+- Product : 팩토리 메서드에 의해 생성될 구현 객체의 인터페이스
+- ConcreteProduct : 구현 객체가 생성되는 클래스
+
+<br>
+<br>
 
 ### 팩토리 메서드 패턴 장단점
 
@@ -45,6 +54,7 @@
   }
   ```
 
+<br>
 <br>
 
 ### Factory Method patterns in Java

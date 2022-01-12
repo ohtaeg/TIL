@@ -1,0 +1,35 @@
+@startuml
+
+interface MotorFactory {
+    + {abstract} Motor getMotor()
+}
+
+enum AbstractMotorFactory implements MotorFactory {
+    - LG {return new LGMotor}
+    - HYUNDAI {return new HyundaiMotor}
+    + static AbstractMotorFactory findByName(String name)
+}
+
+abstract class Motor {
+    + {abstract} void moveMotor(Direction)
+}
+
+class LGMotor extends Motor {
+    + void moveMotor(Direction)
+}
+
+class HyundaiMotor extends Motor {
+    + void moveMotor(Direction)
+}
+
+Client -down-> MotorFactory
+Client -down-> Motor : use
+
+Client -left-> ElevatorController : use
+Motor -left-> MotorStatus : use
+ElevatorController --> Motor
+
+MotorFactory -left-> Motor
+
+
+@enduml
