@@ -12,10 +12,6 @@ public abstract class ProgramFile {
         this.depth = depth;
     }
 
-    public void addEntry(ProgramFile programFile) {
-        this.addEntry(programFile);
-    }
-
     public abstract int getSize();
 
     public abstract void print();
