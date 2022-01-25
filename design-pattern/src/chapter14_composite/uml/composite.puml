@@ -9,12 +9,13 @@ class Leaf implements Component {
 }
 
 class Composite {
-    - Component
+    - Component[]
     + void addComponent(Component)
     + void removeComponent(Component)
     + void operation()
 }
 
-Composite o--> Component
+Client -right-> Component
+Composite o-up-> Component
 
 @enduml
