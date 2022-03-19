@@ -35,3 +35,10 @@ Today I Learned
     - [MIME](./network/http/MIME.md)
     - [HTTP Header](./network/http/HttpHeader.md)
     - [Web Cache](./network/http/Web_Cache.md)
+
+## AWS SAA
+- UDEMY - AWS Certified Solutions Architect Associate
+  - [EC2](./aws-saa/ec2)
+    - 배치 그룹
+    - 스팟 인스턴스
+    - ENI
