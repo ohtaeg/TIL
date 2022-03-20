@@ -42,3 +42,7 @@ Today I Learned
     - 배치 그룹
     - 스팟 인스턴스
     - ENI
+    - Nitro
+    - Hibernate
+    - EBS
+    - EFS
