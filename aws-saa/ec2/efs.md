@@ -19,7 +19,7 @@
     - POSIX file system (~ Linux)
 - EFS를 암호화하기 위해 `KMS` 키를 사용한다.
 
-
+![efs](./img/efs.png)
 
 <br>
 
