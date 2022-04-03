@@ -37,7 +37,7 @@ Today I Learned
     - [Web Cache](./network/http/Web_Cache.md)
 
 ## AWS SAA
-- UDEMY - AWS Certified Solutions Architect Associate
+- UDEMY - AWS Certified Solutions Architect Associate 
   - [EC2](./aws-saa/ec2)
     - 배치 그룹
     - 스팟 인스턴스
@@ -49,3 +49,9 @@ Today I Learned
   - [DB](./aws-saa/database)
     - RDS
     - Aurora
+  - [IAM](./aws-saa/iam)
+    - iam
+    - role
+    - tools
+  - [S3](./aws-saa/s3)
+    
