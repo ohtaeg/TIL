@@ -1,0 +1,9 @@
+package chapter14_composite.example.after;
+
+public abstract class ComputerDevice {
+
+    public abstract int getPrice();
+
+    public abstract int getPower();
+
+}

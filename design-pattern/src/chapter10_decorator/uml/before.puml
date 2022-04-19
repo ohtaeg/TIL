@@ -1,0 +1,23 @@
+@startuml
+
+class RoadDisplay {
+    + void draw()
+}
+
+class RoadDisplayWithLane extends RoadDisplay {
+    + void draw()
+    - void drawLane()
+}
+
+class RoadDisplayWitTraffic extends RoadDisplay {
+    + void draw()
+    - void drawLane()
+    - void drawTraffic()
+}
+
+class ConcreteClasses extends RoadDisplay {
+    + void draw()
+    - void manyMethods()
+}
+
+@enduml

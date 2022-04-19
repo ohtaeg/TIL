@@ -1,0 +1,21 @@
+@startuml
+
+interface Component {
+    + void operation()
+}
+
+class Leaf implements Component {
+    + void operation()
+}
+
+class Composite {
+    - Component[]
+    + void addComponent(Component)
+    + void removeComponent(Component)
+    + void operation()
+}
+
+Client -right-> Component
+Composite o-up-> Component
+
+@enduml

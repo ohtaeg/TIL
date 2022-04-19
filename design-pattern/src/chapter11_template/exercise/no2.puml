@@ -1,0 +1,22 @@
+@startuml
+class ReportGenerator {
+    - List<Customer>
+    + String generate(CustomerSelectorCallback customerSelectorCallback, CustomerReportCallback customerReportCallback)
+}
+
+interface CustomerSelectorCallback {
+    + List<Customer> select(List<Customer> customers)
+}
+
+interface CustomerReportCallback {
+    + String reportCustomer(String name, int point)
+}
+
+Client -right-> ReportGenerator
+
+ReportGenerator o--> CustomerSelectorCallback
+ReportGenerator o--> CustomerReportCallback
+
+
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Observer {
+    + {abstract} void update()
+}
+
+interface Subject {
+    + {abstract} void attach(Observer)
+    + {abstract} void detach(Observer)
+    + {abstract} void notify()
+}
+
+class Battery implements Subject {
+    - int level = 100
+    - List<Observer> observers
+    + void consume(int)
+    + int getLevel()
+}
+
+class BatteryLevelDisplay implements Observer {
+    - Battery
+    .. constructor ..
+    + BatteryLevelDisplay(Battery)
+    __
+    + void update()
+}
+
+class LowBatteryWarning implements Observer {
+    - Battery
+    .. constructor ..
+    + LowBatteryWarning(Battery)
+    __
+    + void update()
+}
+
+Subject -right-> Observer
+BatteryLevelDisplay -left-> Battery
+LowBatteryWarning ---> Battery
+
+@enduml

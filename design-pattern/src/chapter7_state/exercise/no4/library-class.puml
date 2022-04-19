@@ -1,0 +1,41 @@
+@startuml
+class Book {
+    - state
+    + checkout()
+    + return()
+    + reserve()
+}
+
+interface State {
+    + {abstract} checkout()
+    + {abstract} return()
+    + {abstract} reserve()
+}
+
+class Keeping implements State {
+   + checkout()
+   + return()
+   + reserve()
+}
+
+class Checkout implements State {
+   + checkout()
+   + return()
+   + reserve()
+}
+
+class Return implements State {
+   + checkout()
+   + return()
+   + reserve()
+}
+
+class Reservation implements State {
+   + checkout()
+   + return()
+   + reserve()
+}
+
+Book o--> State
+
+@enduml

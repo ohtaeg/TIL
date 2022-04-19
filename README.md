@@ -13,6 +13,13 @@ Today I Learned
   - [Chapter4. 디자인패턴](./design-pattern/src/chapter4)
   - [Chapter5. 전략패턴](./design-pattern/src/chapter5_strategy)
   - [Chapter6. 싱글톤패턴](./design-pattern/src/chapter6_singleton)
+  - [Chapter7. 상태패턴](./design-pattern/src/chapter7_state)
+  - [Chapter8. 커맨드패턴](./design-pattern/src/chapter8_command)
+  - [Chapter9. 옵저버패턴](./design-pattern/src/chapter9_observer)
+  - [Chapter10. 데코레이터패턴](./design-pattern/src/chapter10_decorator)
+  - [Chapter11. 템플릿메서드패턴](./design-pattern/src/chapter11_template)
+  - [Chapter12. 팩토리메서드패턴](./design-pattern/src/chapter12_factory_method)
+  - [Chapter14. 컴포지트패턴](./design-pattern/src/chapter14_composite)
   
 ## 네트워크
 - 모두의 네트워크
@@ -28,3 +35,24 @@ Today I Learned
     - [MIME](./network/http/MIME.md)
     - [HTTP Header](./network/http/HttpHeader.md)
     - [Web Cache](./network/http/Web_Cache.md)
+
+## AWS SAA
+- UDEMY - AWS Certified Solutions Architect Associate 
+  - [EC2](./aws-saa/ec2)
+    - 배치 그룹
+    - 스팟 인스턴스
+    - ENI
+    - Nitro
+    - Hibernate
+    - EBS
+    - EFS
+  - [DB](./aws-saa/database)
+    - RDS
+    - Aurora
+  - [IAM](./aws-saa/iam)
+    - iam
+    - role
+    - tools
+  - [S3](./aws-saa/s3)
+  - [CloudFront](./aws-saa/cloud-front)
+    

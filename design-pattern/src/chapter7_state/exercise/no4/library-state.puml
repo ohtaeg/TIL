@@ -1,0 +1,13 @@
+@startuml
+
+scale 200 width
+
+[*] --> Keeping
+
+Keeping -down-> CheckOut : checkout
+CheckOut -up-> Keeping : return
+CheckOut --> Reservation : reserve
+Reservation --> CheckOut : cancel reserve
+Reservation --> Keeping : cancel reserve
+
+@enduml

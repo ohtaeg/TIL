@@ -1,0 +1,36 @@
+@startuml
+
+abstract class Display {
+    + {abstract} void draw()
+}
+
+class RoadDisplay extends Display {
+    + void draw()
+}
+
+abstract class DisplayDecorator extends Display {
+    - Display display
+    .. constructor ..
+    DisplayDecorator(Display)
+    __
+    + void draw()
+}
+
+class LineDecorator extends DisplayDecorator {
+    .. constructor ..
+    LineDecorator(Display)
+    __
+    + void draw()
+    - void drawLine()
+}
+
+class TrafficDecorator extends DisplayDecorator {
+    .. constructor ..
+    TrafficDecorator(Display)
+    __
+    + void draw()
+    - void drawTraffic()
+}
+
+
+@enduml

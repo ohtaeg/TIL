@@ -1,0 +1,39 @@
+@startuml
+
+class Button {
+    .. Constructor ..
+    + Button(Command)
+    __
+    + void pressed()
+    + void setCommand(Command)
+}
+
+interface Command {
+    + {abstract} void execute()
+}
+
+class LampOnCommand implements Command {
+    .. Constructor ..
+    + LampOnCommand(Lamp)
+    __
+    + void execute()
+}
+
+class LampOffCommand implements Command {
+    .. Constructor ..
+    + LampOffCommand(Lamp)
+    __
+    + void execute()
+}
+
+class Lamp {
+    + void turnOn()
+    + void turnOff()
+}
+
+Button -right-> Command
+LampOnCommand --> Lamp
+LampOffCommand --> Lamp
+
+
+@enduml

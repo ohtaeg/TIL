@@ -1,0 +1,19 @@
+@startuml
+
+class Motor {
+    + {abstract} void moveMotor(Direction)
+}
+
+class LGMotor extends Motor {
+    + void moveMotor(Direction)
+}
+
+class HyundaiMotor extends Motor {
+    + void moveMotor(Direction)
+}
+
+Motor -right-> MotorStatus : use
+ElevatorController -right-> Motor
+Client --> ElevatorController : use
+Client --> Motor : use
+@enduml

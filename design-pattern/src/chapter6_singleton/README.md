@@ -212,7 +212,7 @@ public class Printer {
     private int count = 0;
 
     private Printer() {
-        if ( instannce != null ) {
+        if (printer != null) {
             throw new ExceptionInInitializerError( "생성자를 통해 접근할 수 없습니다." );
         }
     }
@@ -272,7 +272,18 @@ public class RealPrinter implements Printer {
 ```
 
 <br>
+<br>
 
+---------
+
+### 한번 생각 해봅시다.
+
+1. 메서드 vs 함수
+2. private static inner class
+3. volatile
+
+
+#### 1.메서드 vs 함수
 - 다음 코드를 보고 생각해봅시다.
 ```java
 public class Printer {
@@ -285,10 +296,10 @@ public class Printer {
     
     public void foo() {
         // 1
-        service.print();
+        final String result = service.print("1234");
         
         // 2
-        PrintUtils.print();
+        final String result2 = PrintUtils.print("12345");
   }
 }
 ```
@@ -297,6 +308,19 @@ public class Printer {
 
 <br>
 
+#### 2. private static inner class
 - 다음으로 `private static inner class` 에 대해서 같이 생각해보면 좋을 것 같다.
   - 즉 inner class는 왜 주로 private static를 선언하는가?
   - ex) Map의 구현 클래스 Entry의 객체
+
+<br>
+
+#### 3. volatile
+- `Memory barrier`, 메모리 장벽을 만나면 다른 코어에서 최신 값을 읽어올 수 있도록 코어의 레지스터나 캐쉬에 변경되었던 값을 전부 메인 메모리로 반영한다. 
+- 하드웨어 메모리 아키텍처는 쓰레드 스택과 힙을 구분하지 않는다. 
+- 하드웨어에서 스레드 스택과 힙은 메인메모리, 캐시 메모리, 레지스터에서 자유롭게 접근한다.
+  - 당연하게도 JVM 자체가 메인 메모리 위에서 동작하기 때문
+- 그러다보니 non-volatile 변수에 대한 작업은 JVM 이 메인 메모리로부터 CPU 캐시로 변수를 읽어들이거나, 
+- CPU 캐시로부터 메인 메모리에 데이터를 쓰거나 할 때에 대한 어떠한 보장도 하지 않는다.
+- 쓰레드가 변경한 값이 메인 메모리에 저장되지 않아서 다른 쓰레드가 이 값을 볼 수 없는 상황을 `가시성` 문제라 한다.
+- 만능 해결책이 아니라는데, 어떤 상황에서 써야할까?
