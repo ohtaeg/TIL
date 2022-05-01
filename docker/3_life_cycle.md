@@ -113,6 +113,11 @@ $ sudo docker ps
 $ sudo docker ps -a 
 ```
 
+## 모든 컨테이너 id만 확인 (실행/중지)
+```shell
+$ sudo docker ps -a -q
+```
+
 ## 컨테이너 중지
 ```shell
 $ sudo docker stop f6e513b399a5 # {containerId or containerName}
@@ -126,7 +131,7 @@ $ sudo docker rm f6e513b399a5 # {containerId or containerName}
 
 ## 컨테이너 생성
 ```shell
-$ sudo docker -p 80:80 --name nx nginx
+$ sudo docker create -p 80:80 --name nx nginx
 # a1s2d3f4
 ```
 - 같은 이름의 컨테이너를 생성할 수 없다.
