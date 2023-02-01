@@ -33,8 +33,6 @@ $ tail -n 50 logstash-plain-2022-12-19-6.log
   - 즉 현재 상황은 인덱스당 샤드 1개이기 떄문에 새로운 인덱스 생성시 디스크 공간을 고려한다.
 - 즉, 디스크 공간이 부족하다는 추측을 할 수 있었다.
 
-<br>
-
 - 디스크 공간 관련해서 [공식 문서](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cluster.html#disk-based-shard-allocation)의 내용들을 찾아보니
 ```text
 Controls the low watermark for disk usage.
@@ -42,4 +40,44 @@ It defaults to 85%, meaning that Elasticsearch will not allocate shards to nodes
 ```
 - **기본 85% 이상 Disk를 사용하면 shard allocation 이 안된다.**
 
+<br>
 
+### 그렇다면 디스크 용량 부족시 대처 방법을 어떻게 했는가?
+
+- 애초에 디스크 용량이 너무 작았다. 디스크 용량을 증설해버림
+- 파티션 현황을 확인
+
+```shell
+$ fdisk -l
+
+
+Disk /dev/loop0: 46.98 MiB, 49233920 bytes, 96160 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+...
+
+Disk /dev/nvme0n1: 100 GiB, 107374182400 bytes, 209715200 sectors
+Disk model: Amazon Elastic Block Store              
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: dos
+Disk identifier: 0x24ca9e81
+
+Device         Boot Start      End  Sectors Size Id Type
+/dev/nvme0n1p1 *     2048 16777182 16775135   8G 83 Linux
+```
+- 위와 같이 여러 loop 파티션이 나눠져있는데, 증설된 EBS `/dev/nvme0n1` 을 찾을 수 있었고
+- 부팅 볼륨 `/dev/nvme0n1p1` 을 찾을 수 있다.
+- 해당 볼륨이 우분투에 마운트가 Attach 되었는지 확인한다.
+```shell
+$ lsbik
+
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+loop0         7:0    0   47M  1 loop /snap/snapd/16010
+...
+nvme0n1     259:0    0  100G  0 disk 
+└─nvme0n1p1 259:1    0    8G  0 part /
+```
