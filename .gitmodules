@@ -1,4 +1,0 @@
-[submodule "spring-jpa-study"]
-	path = spring-jpa-study
-	url = https://github.com/ohtaeg/spring-jpa-study.git
-	branch = master
