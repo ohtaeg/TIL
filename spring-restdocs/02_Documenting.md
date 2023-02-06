@@ -133,3 +133,185 @@ RestAssured.filter(document("user", responseFields(
                 .type(JsonFieldType.STRING) 
 				.description("The user's email address"))))
 ```
+
+<br>
+
+### Reusing Field Descriptors
+- 생략, 필요할 때 정리
+
+<br>
+<br>
+
+## Documenting a Subsection of a Request or Response Payload
+- payload가 크거나 복잡하면 섹션별로 분리해서 문서화하는 것도 유용하다.
+- payload의 하위 섹션을 추출하여 문서화할 수 있다.
+
+### Documenting a Subsection of a Request or Response Body
+- 아래 JSON 응답 바디를 살펴보자.
+```json
+{
+	"weather": {
+		"wind": {
+			"speed": 15.3,
+			"direction": 287.0
+		},
+		"temperature": {
+			"high": 21.2,
+			"low": 14.8
+		}
+	}
+}
+```
+- 이때 하위 객체인 temperature만 문서화하는 스니펫을 다음과 같이 만들 수 있다.
+```groovy
+RestAssured.given(this.spec).accept("application/json")
+	.filter(document("location", responseBody(beneathPath("weather.temperature")))) // (1)
+	.when().get("/locations/1")
+	.then().assertThat().statusCode(is(200));
+```
+- (1)
+  - 응답 바디의 하위 섹션(weather.temperature)만 가지는 스니펫을 만든다.
+  - PayloadDocumentation의 responseBody()와 beneathPath()을 이용하면 된다.
+- 위 설정으로 만들어지는 스니펫은 아래와 같다.
+```json
+
+{
+	"temperature": {
+		"high": 21.2,
+		"low": 14.8
+	}
+}
+```
+- 스니펫 이름은 beneath-${path} 형식으로, response-body-beneath-weather.temperature.adoc 으로 만들어진다.
+- withSubsectionId("name") 을 활용하면 이름을 커스텀하게 만들 수 있따.
+
+> responseBody(beneathPath("weather.temperature").withSubsectionId("temp"));
+
+- request-body-temp.adoc
+
+<br>
+
+### Documenting the Fields of a Subsection of a Request or Response
+- 생략, 필요할 때 정리
+
+<br>
+<br>
+
+## Request Parameters
+- 요청 파라미터는 requestParameters()로 문서화할 수 있으며 쿼리스트링으로 추가하는 방법은 다음과 같다.
+```groovy
+RestAssured.given(this.spec)
+	.filter(document("users", requestParameters( // (1)
+			parameterWithName("page").description("The page to retrieve"), // (2)
+			parameterWithName("per_page").description("Entries per page")))) // (3)
+	.when().get("/users?page=2&per_page=100") // (4)
+	.then().assertThat().statusCode(is(200));
+```
+- (1)
+  - 요청 파라미터를 설명하는 스니펫
+- (2), (3)
+  - 4번의 쿼리스트링을 설명
+- (4)
+  - 쿼리스트링에 두파라미터를 사용해서 get 요청 수행
+- 요청 파라미터가 실제 요청에 없을 때 선택사항으로 설정하지 않았으면 테스트는 실패한다.
+- 모든 요청 파라미터를 문서화하지 않아도 테스트를 실패하지 않도록 relaxedRequestParameters()를 사용할 수 있다.
+
+<br>
+
+### Path Parameters
+```groovy
+RestAssured.given(this.spec)
+	.filter(document("locations", pathParameters( // (1)
+			parameterWithName("latitude").description("The location's latitude"), // (2)
+			parameterWithName("longitude").description("The location's longitude")))) // (3)
+	.when().get("/locations/{latitude}/{longitude}", 51.5072, 0.1275) // (4)
+	.then().assertThat().statusCode(is(200));
+```
+- (1)
+  - 요청 패스 파라미터를 설정하는 스니펫
+- (2), (3)
+  - RequestDocumentation.parameterWithName()을 사용하여 패스 파라미터 문서화
+- (4)
+  - 패스 파라미터를 통해 GET 요청 수행
+
+<br>
+
+## Request Parts
+- 멀티파트 요청도 requestParts로 문서화할 수 있다.
+```groovy
+RestAssured.given(this.spec)
+	.filter(document("users", requestParts( // (1)
+			partWithName("file").description("The file to upload")))) // (2)
+	.multiPart("file", "example") // (3)
+	.when().post("/upload") // (4)
+	.then().statusCode(is(200));
+```
+
+### Request Part Payloads
+- 요청 body의 part는 위 요청 body와 동일한 방식으로 문서화할 수 있다.
+
+### Documenting a Request Part’s Body
+- 생략, 필요할 때 정리
+
+### Documenting a Request Part’s Fields
+- 생략, 필요할 때 정리
+
+<br>
+<br>
+
+## HTTP Headers
+- requestHeaders, responseHeaders를 통해 요청, 응답 헤더를 문서화할 수 있다.
+```groovy
+RestAssured.given(this.spec)
+	.filter(document("headers",
+			requestHeaders( // (1)
+					headerWithName("Authorization").description(
+							"Basic auth credentials")), // (2)
+			responseHeaders( // (3)
+					headerWithName("X-RateLimit-Limit").description(
+							"The total number of requests permitted per period"),
+					headerWithName("X-RateLimit-Remaining").description(
+							"Remaining requests permitted in current period"),
+					headerWithName("X-RateLimit-Reset").description(
+							"Time at which the rate limit period will reset"))))
+	.header("Authorization", "Basic dXNlcjpzZWNyZXQ=") // (4)
+	.when().get("/people")
+	.then().assertThat().statusCode(is(200));
+```
+
+<br>
+<br>
+
+## Documenting Constraints
+- ConstraintDescriptions를 이용하여 제약조건 문서화도 가능하다.
+```groovy
+public void example() {
+	ConstraintDescriptions userConstraints = new ConstraintDescriptions(UserInput.class); // (1)
+	List<String> descriptions = userConstraints.descriptionsForProperty("name"); // (2)
+}
+
+static class UserInput {
+
+	@NotNull
+	@Size(min = 1)
+	String name;
+
+	@NotNull
+	@Size(min = 8)
+	String password;
+
+}
+```
+- (1)
+  - UserInput 클래스의 제약조건 설명 문서를 생성한다.
+- (2)
+  - name 필드의 제약조건들을 가져온다. 현재 예로 NotNull과 Size 제약 조건이 담겨있다.
+
+<br>
+
+### Finding Constraints
+- 기본적으로 Bean Validation Validator를 찾는다.
+- `현재는 프로퍼티 제약 조건만 지원한다.`
+- 커스텀 Valiator를 문서화하고 싶다면 ValidatorConstraintResolver를 인스턴스로  ConstraintDescriptions를 만들면 사용할 Validator를 커스텀할 수 있다.
+- 제약조건 resolution(?)을 완벽하게 제어하고 싶으면 ConstraintResolver를 직접 구현해라.
+- 

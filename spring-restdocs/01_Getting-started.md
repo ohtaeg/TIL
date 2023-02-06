@@ -201,7 +201,7 @@ RestAssured.given(this.spec)    (1)
 <br>
 
 ## Using the Snippets
-- 생성된 스니펫을 사용하려면 .adoc 파일을 만들어야한다.
+- 생성된 스니펫을 사용하려면 .adoc 파일을 개발자가 직접 만들어야한다.
   - 이름은 상관없다.
 - 만들어지는 HTML 파일도 같은 이름으로 생성된다.
 - gradle를 사용하면 생성된 HTML 파일의 경로는 다음과 같다.
