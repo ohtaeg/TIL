@@ -1,5 +1,5 @@
 # Documenting your API
-- 해당 목차는 [공식 문서](https://docs.spring.io/spring-restdocs/docs/2.0.5.RELEASE/reference/html5/#documenting-your-api)에서 REST Docs로 API를 문서화 하는 방법을 읽고 정리한다.
+- 해당 목차는 [공식 문서](https://docs.spring.io/spring-restdocs/docs/current/reference/htmlsingle/#documenting-your-api)에서 REST Docs로 API를 문서화 하는 방법을 읽고 정리한다.
 
 ## Hypermedia
 - 하이퍼미디어 기반 API에서 링크도 문서화를 할 수 있다.
@@ -306,6 +306,19 @@ static class UserInput {
   - UserInput 클래스의 제약조건 설명 문서를 생성한다.
 - (2)
   - name 필드의 제약조건들을 가져온다. 현재 예로 NotNull과 Size 제약 조건이 담겨있다.
+
+<br>
+
+### Reusing Snippets
+- 스니펫을 재사용할 수 있다. 만들어진 스니펫에 discriptor를 추가할 수 있다.
+```groovy
+RestAssured.given(this.spec)
+	.accept("application/json")
+	.filter(document("example", this.pagingLinks.and( 
+			linkWithRel("alpha").description("Link to the alpha resource"),
+			linkWithRel("bravo").description("Link to the bravo resource"))))
+	.get("/").then().assertThat().statusCode(is(200));
+```
 
 <br>
 

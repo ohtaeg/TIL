@@ -1,8 +1,8 @@
 # Spring REST Docs
 - 업무를 진행하면서 단순 문서화가 아닌 OAS 추출 등 추가 작업을 진행하다보니 사용법만 익히고 제대로 본적이 없다.
-- 이번 기회에 [문서](https://docs.spring.io/spring-restdocs/docs/2.0.5.RELEASE/reference/html5/#introduction)를 읽으면서 정리해나가자. 필요한 부분만 발췌해서 정리한다.
+- 이번 기회에 [문서](https://docs.spring.io/spring-restdocs/docs/current/reference/htmlsingle/)를 읽으면서 정리해나가자. 필요한 부분만 발췌해서 정리한다.
 - 현재 REST Docs의 버전은 다음과 같다.
-  - `Version 2.0.5.RELEASE`
+  - `Version 3.0.0.RELEASE`
 - 전체적으로 훑어볼 목차는 다음과 같다.
   - Getting-started
   - Documenting your API
