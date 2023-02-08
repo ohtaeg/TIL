@@ -22,3 +22,36 @@ The minimum and maximum values must be the same.
 Set Xms and Xmx to no more than the threshold for compressed ordinary object pointers (oops).
 The exact threshold varies but 26GB is safe on most systems and can be as large as 30GB on some systems.
 ```
+
+<br>
+<br>
+
+## Memory Swapping 비활성화
+
+- [공식문서](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html)에 나와있듯이 OS는 파일 시스템 캐시에 가능한 한 많은 메모리를 사용하고
+  사용하지 않는 응용 프로그램 메모리를 적극적으로 교체한다고 한다.
+- 즉, **힙의 일부 또는 실행 가능한 페이지가 디스크로 교체될 수 있습니다.**
+- ES는 메모리에 많은양의 데이터를 올려놓고 searching, indexing 등의 작업을 하기 때문에
+- Swap을 켜 놓으면 disk로 내려서 작업이 되어 버리는 순간 성능에 악영향을 끼칠수 있다고 한다.
+- 우선 현재 가동중에 swap을 끄는 커맨드는 다음과 같다. swap을 꺼보자.
+
+```bash
+$ sudo swapoff -a
+```
+- 해당 커멘드는 재부팅되면 사라지므로 영구적으로 적용하려면 다음과 같이한다.
+
+
+```bash
+$ sysctl -a | grep swappiness
+
+or
+
+$ sysctl vm.swappiness
+
+vm.swappiness = 60
+```
+1. /etc/fstab 파일을 vim로 열어서 swap 관련된 내용을 주석 혹은 삭제한다.
+2. sysctl의 vm.swappiness 옵션 값을 확인한다.
+
+- 만약 vm.swappiness 값이 1이 아니거나 결과값이 없다면 1로 설정해준다.
+- 60은 시스템 기본 값
