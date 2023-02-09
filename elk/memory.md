@@ -55,3 +55,31 @@ vm.swappiness = 60
 
 - 만약 vm.swappiness 값이 1이 아니거나 결과값이 없다면 1로 설정해준다.
 - 60은 시스템 기본 값
+- [공식 문서](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration-memory.html)에서 확인할 수 있다.
+
+```
+Configure swappinessedit
+Another option available on Linux systems is to ensure that the sysctl value vm.swappiness is set to 1.
+This reduces the kernel’s tendency to swap and should not lead to swapping under normal circumstances, while still allowing the whole system to swap in emergency conditions.
+```
+
+```shell
+$ sudo vi /etc/sysctl.conf
+
+# 만약 vi를 통해 vm.swapiness 설정이 없고 60 기본값으로 되어있다면
+# 기본값은 시스템 설정이므로 vm.swappiness 설정이 별도로 없을 수 있따.
+# 새로 추가해주어야한다.
+
+i # insert
+
+vm.swappiness=1
+
+:wq
+
+$ sudo sysctl -p
+
+# sysctl.conf 파일 수정 후 다시 로드하도록 하기 위한 커맨드
+```
+
+- `vm.swapiness 설정은 swap 사용의 적극성 혹은 활용 수준을 정하는 커널 속성`
+- 숫자가 높을 수록 적극적으로 swap을 사용하겠다는 것이고, 낮을수록 활용하지 않겠다는 것이다.
