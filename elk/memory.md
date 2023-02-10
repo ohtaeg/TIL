@@ -83,3 +83,13 @@ $ sudo sysctl -p
 
 - `vm.swapiness 설정은 swap 사용의 적극성 혹은 활용 수준을 정하는 커널 속성`
 - 숫자가 높을 수록 적극적으로 swap을 사용하겠다는 것이고, 낮을수록 활용하지 않겠다는 것이다.
+
+<br>
+
+## Enable boostrap.memory_lock
+
+- 메모리 락을 거는 설정도 추가해준다.
+- ES가 실행될 때 ES에 할당된 힙 메모리에 lock을 걸어 메모리에 고정하여
+  그 메모리가 스왑 영역으로 빠지지 않도록 한다
+- /etc/elasticsearch/elasticsearch.yml 에 아래에 값을 수정/추가한다.
+  - `bootstrap.memory_lock:true`
