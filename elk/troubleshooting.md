@@ -81,3 +81,33 @@ loop0         7:0    0   47M  1 loop /snap/snapd/16010
 nvme0n1     259:0    0  100G  0 disk 
 └─nvme0n1p1 259:1    0    8G  0 part /
 ```
+
+
+### 엘라스틱서치 배열 조회시 조심해야할 점
+- 엘라스틱서치에서 만약 SQL 쿼리로 배열 데이터 조회시 다음과 같은 에러를 만날 수 있다.
+
+```sql
+{
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "ql_illegal_argument_exception",
+        "reason" : "Arrays (returned by [host.ip]) are not supported"
+      }
+    ],
+    "type" : "ql_illegal_argument_exception",
+    "reason" : "Arrays (returned by [host.ip]) are not supported"
+  },
+  "status" : 500
+}
+```
+
+- [공홈](https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-limitations.html#_array_type_of_fields)에서 다음과 같이 설명되어있다.
+```text
+Array fields are not supported due to the "invisible" way in which Elasticsearch handles an array of values: 
+the mapping doesn’t indicate whether a field is an array (has multiple values) or not, so without reading all the data, Elasticsearch SQL cannot know whether a field is a single or multi value. 
+When multiple values are returned for a field, by default, Elasticsearch SQL will throw an exception. 
+However, it is possible to change this behavior through field_multi_value_leniency parameter in REST (disabled by default) 
+or field.multi.value.leniency in drivers (enabled by default).
+```
+- 길게 설명되어있지만 요약하면 **지원하지 않는다**고 한다.
