@@ -30,3 +30,18 @@
     2. 메트릭비트 실행시 권한 체크를 무시하는 커맨드 옵션을 추가해준다.
         - `sudo ./metricbeat -e -strict.perms=false`
 - yml 파일 뿐만 아니라 module 관련해서도 권한 및 소유자를 설정해줘야한다.
+
+<br>
+
+# 메트릭 비트 - 몽고 디비 연결 문제
+- 몽고디비 Atlas와 연결하면서 에러를 조우하였다.
+- 원래 몽고디비 컴파스를 통해 연결되는 URL은 다음과 같다.
+  - `mongodb+srv://~~~~~` 
+- 위 URL 그대로 설정하고나서 처음 만난 에러는 다음과 같다.
+    - `too many colons in address`
+- 찾아보니 [공홈](https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-module-mongodb.html)에서는 다음과 같은 포맷으로 입력해야한다고 한다.
+  - `[mongodb://][user:pass@]host[:port][?options]`
+- 즉 몽고디비 컴파스와 연결되는 URL과 공홈에서 연결하는 포맷이 달라 발생하던 에러로 간주가 된다.
+  - `mongdb+srv://` 를 `mongdb://` 로 변경하는 작업을 거쳐야한다.
+- 변경했던 작업은 추후 정리한다.
+    
