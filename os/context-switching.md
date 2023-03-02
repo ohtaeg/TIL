@@ -42,7 +42,7 @@
     - MMU 라는 Memory Managemnt Unit과 TLB 캐시를 이용
       - MMU : CPU에서 가상 주소 메모리 접근이 필요할 때, 가상 메모리 주소(논리 주소)를 물리 주소값으로 매핑해주는 하드웨어 장치
       
-      ![img.png](img.png)
+      ![img.png](img/img_4.png)
   - **thread context switching은 프로세스 내 같은 메모리 공간을 공유하기 때문에 메모리 주소 관련 처리를 하지 않기 때문에 더 빠름**
 
 <br>
