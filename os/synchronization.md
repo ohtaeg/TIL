@@ -82,7 +82,56 @@ STORE R1 to state  <- 레지스터에 있는 값을 메모리에 있는 state �
 
 ## 어떻게 해야 mutual exclusionn을 보장할 수 있을까?
 - 락을 사용한다. 여러 스레드가 공유해서 쓰는 데이터를 보호할 때 사용된다.
-- 스핀락, 뮤텍스, 세마포어 추가 정리
+- 대부분의 락은 CPU 도움이 필요하며, CPU의 도움이 필요한 대표적인 락들은 아래와 같다
+  - `스핀락`, `뮤텍스`, `세마포어`
+
+<br>
+
+## 스핀락
+- 락을 가질 때까지 반복해서 락을 쥐려고 시도하는 락
+  - 반복문에서 계속 확인을 하기 때문에 CPU를 계속 사용하게 된다는 특징이 있다.
+  - 즉, 기다리는 동안 CPU를 낭비하는 단점이 있다.
+- 예제로 간단하게 살펴본다.
+  - 여러 쓰레드가 글로벌 변수 lock에 대한 접근을 할 때 루프를 통해 lock을 얻기 위해 시도하는 예제이다.
+```
+volatile int lock = 0;      // global 변수
+
+void test() {
+    while (test_and_set(&lock) == 1);  // 반복 시도, CPU 계속 사용
+        // critical section 
+    lock = 0;
+}
+
+int test_and_set(int* lockPtr) {
+	int oldLock = *lockPtr;  // 기존 값 저장
+	*lockPtr = 1;            // 1로 바꿈
+	return oldLock;          // 기존 값 반환
+}
+```
+1. 쓰레드 T1이 lock을 획득하며 임계 영역에 들어가게 된다. 이때 lock 데이터는 1이 된다.
+
+  ![img.png](img/synchronization/spinlock.png)
+
+2. 그리고 나서 T2가 시작되면 while문의 조건을 확인하면서 임계 영역에 들어가지 못하고 무한 루프를 통해 lock을 계속 얻으려고 획득하게 된다. 
+  
+  ![img_1.png](img/synchronization/spinlock_1.png)
+
+3. T1이 작업을 끝내고 0을 반환하게 되면 T2가 임계 영역에 들어가게 된다.
+
+  ![img_2.png](img/synchronization/spinlock_2.png)
+
+<br>
+
+- 만약에 T1과 T2에 동시에 tset_and_set()을 호출하거나 중간에 컨텍스트 스위칭을 하게 되면 둘 다 0이라는 값을 가져 둘다 임계 영역에 들아갈 수 있지 않을까?
+  
+  ![img_3.png](img/synchronization/spinlock_3.png)
+
+  - 맞다. 그래서 test_and_set() 함수는 위에서 설명했듯이 **cpu의 atomic 명령으로써 도움을 받아야한다.**
+  
+- Atomic 명령어
+  - 실행 중간에 간섭받거나 중단되지 않는다.
+  - 같은 메모리 영역에 대해 동시에 실행되지 않는다.
+    - 즉, test_and_set() 함수를 두 쓰레드가 동시에 실행할지라도 CPU 레벨에서 하나를 먼저 실행하고 다른 하나를 실행시키도록 동기화를 한다. 
 
 ----
 
