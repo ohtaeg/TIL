@@ -57,20 +57,61 @@ public synchronized void add() {
 - `broadcast`
   - waiting queue에서 대기중인 스레드 전부를 깨운다.
 
-### 모니터의 두개의 큐
+<br>
+
+## 모니터의 두개의 큐
 - entry queue : critical section에 진입을 기다리는 큐이다.
   - mutex에서 관리하는 큐
 - waiting queue : 조건이 충족되길 기다리는 큐이다.
   - condition variables에서 관리되는 큐
+  - 모니터가 notify() 해줄 때까지 기다리는 스레드를 관리하는 큐
 
 ### 모니터 예제 코드
 - sudo
 ```text
-    acquire(m);         // 모니터의 락 취득
-    while(!p) {         // 조건 확인
-        wait(m, cv)     // 조건 충족 안되면 waiting
-    }
-    
-    signal(cv); or broadcast(cv2) // 스레드를 깨운다. cv와 cv2는 같을 수 있음
-    release(m);     // 모니터 락 반환
+acquire(m);         // 모니터의 락 취득
+while(!p) {         // 조건 확인
+    wait(m, cv)     // 조건 충족 안되면 waiting
+}
+
+... // 연산 수행
+
+signal(cv); or broadcast(cv2) // 스레드를 깨운다. cv와 cv2는 같을 수 있음
+release(m);     // 모니터 락 반환
 ```
+- 위 예제를 통해 크게 두가지 상황을 볼 수 있다.
+- https://happy-coding-day.tistory.com/8
+  1. 모니터 락 획득(acquire)과 반환(release)
+  2. 조건에 따른 모니터 락 획득(acquire)과 반환(release)
+
+<br>
+
+- 모니터 락 획득(acquire)과 반환(release)
+1. T1이 lock을 획득하여 critical section에 진입
+2. T2가 진입하려는데 모니터 락을 소유한 스레드가 이미 있어서 Entry Queue에 대기
+  
+    ![img_1.png](img/monitor/img_1.png)
+
+3. T1이 lock을 반환하고 release()을 통해 Entry Queue에서 대기하고 있는 스레드를 깨움.
+
+<br>
+
+- 조건에 따른 모니터 락 획득(acquire)과 반환(release)
+1. T1이 lock을 획득하여 critical section에 진입
+2. T2가 진입하려는데 lock을 획득하지 못해 Entry Queue에 대기
+
+   ![img_1.png](img/monitor/img_1.png)
+
+3. T1이 lock을 반환하고 release()을 통해 Entry Queue에서 대기하고 있는 T2 스레드를 깨움.
+4. T2가 lock을 획득했지만 조건에 만족하지 못해 waiting queue에 들어가게 되면서 lock 반환
+
+    ![img_2.png](img/monitor/img_2.png)
+
+5. T3가 진입하여 lock을 획득하여 critical section에 진입
+6. T4가 진입하려는데 lock을 획득하지 못하고 Entry Queue에 대기
+
+    ![img_1.png](img/monitor/img_3.png)
+
+7. T3 lock을 반환하려고 할 때 signal()을 통해 Waiting Queue에 있는 스레드를 깨워 다시 모니터 락 획득을 위해 Entry Queue로 이동
+
+    ![img_1.png](img/monitor/img_4.png)
