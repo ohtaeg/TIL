@@ -80,7 +80,6 @@ signal(cv); or broadcast(cv2) // 스레드를 깨운다. cv와 cv2는 같을 수
 release(m);     // 모니터 락 반환
 ```
 - 위 예제를 통해 크게 두가지 상황을 볼 수 있다.
-- https://happy-coding-day.tistory.com/8
   1. 모니터 락 획득(acquire)과 반환(release)
   2. 조건에 따른 모니터 락 획득(acquire)과 반환(release)
 
@@ -115,3 +114,70 @@ release(m);     // 모니터 락 반환
 7. T3 lock을 반환하려고 할 때 signal()을 통해 Waiting Queue에 있는 스레드를 깨워 다시 모니터 락 획득을 위해 Entry Queue로 이동
 
     ![img_1.png](img/monitor/img_4.png)
+
+8. entry queue는 선입선출이 무조건이 아닌 OS 스케줄러가 어떤 선택을 하는지에 따라 대기하고 있는 스레드 중 하나가 다시 lock을 얻으려고 시도한다.
+9. 이때 T3가 signal()로 T2를 깨우고 T3가 계속 진행을 한다면 `signal and continue`라 하고 T3가 signal()로 T2로 깨우고 T2는 wait가 되고 T3가 시작하는 경우를 
+   `signal and wait`라고 한다.
+10. 운좋게 잠들었던 T2가 선택받았을 때 T2는 lock을 획득하고 T2가 멈췄던 wait(); 부분부터 다시 시작하게 된다.
+11. 그리고나서 다시 조건이 충족하는지 비교하게 된다. 잠들었다가 깨어났는데 조건을 다시 판별하는 이유?
+    - OS에 따라 wait()한 스레드가 이유없이 깰 수도 있다. 그래서 스레드가 기다렸던 조건이 충족했는지 판별해야한다.
+
+    ![img_1.png](img/monitor/img_5.png)
+
+<br>
+<br>
+
+## 컨슈머 프로듀서 문제
+- 프로듀서와 버퍼, 컨슈머가 있다.
+  - 프로듀서는 버퍼에 계속 item을 넣는 역할
+  - 컨슈머는 버퍼에 있는 item을 소비하는 역할
+- 버퍼를 공유해서 사용하는 경우 문제가 있다. 
+  - 열심히 아이템을 생산해서 버퍼에 가득채웠는데 프로듀서가 버퍼에 빈공간이 있는지 계속 체크해줘야 한다.
+  - 버퍼에 아이템이 없으면 컨슈머는 버퍼에 있는지 없는지 끊임없이 체크해줘야한다.
+- 이런 문제를 모니터 락으로 해결할 수 있다.
+
+```java
+public class BoundedConsumerProducer {
+    private static final Buffer q;
+    private static final Mutex lock;
+    private static final CV fullConditionVariables;
+    private static final CV emptyConditionVariables;
+
+    public void producer() {
+        while (true) {
+            lock.acquire();
+
+            // 버퍼가 가득차면 lock을 반환하고 계속 produce 하지말고 waiting queue에서 대기하도록
+            while (q.isFull()) {
+                wait(lock, fullConditionVariables);
+            }
+
+            q.enqueue(item);
+
+            // 제공한 다음 consumer의 waiting queue에서 잠자고 있는 스레드를 깨워서 item을 소비하도록 깨운다.
+            signal(emptyCV);
+
+            lock.release();
+        }
+    }
+
+
+    public void consumer() {
+        while (true) {
+            lock.acquire();
+
+            // 버퍼에 하나도 없으면 lock을 반환하고 계속 consume 하지말고 waiting queue에서 대기하도록
+            while (q.isEmpty()) {
+                wait(lock, emptyCV);
+            }
+
+            q.dequeue();
+            // 소비한 다음 producer의 waiting queue에서 잠자고 있는 스레드를 깨워서 item 제공받도록 깨운다.
+            signal(fullConditionVariables);
+
+            lock.release();
+        }
+    }
+}
+
+```
