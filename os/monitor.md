@@ -11,7 +11,8 @@
   - wait() and notify()
 
 ### synchronized
-- critical section에 해당하는 코드 블록을 명시적으로 선언할 때 사용하는 자바 키워드
+- 모니터의 mutual exclusion 기능은 해당 키워드를 사용한다.
+  - critical section에 해당하는 코드 블록을 명시적으로 선언할 때 사용하는 자바 키워드
 - 해당 코드 블록에는 모니터락을 획득해야 진입이 가능
 - 모니터 락을 가진 객체 인스턴스를 지정할 수 있음
 - 해당 임계 영역에 들어가기 위해서는 파라미터 인스턴스가 모니터 락을 획득해야한다
@@ -30,6 +31,7 @@ public synchronized void add() {
 
 ### wait() and notify()
 - java.lang.Object에 선언되어 있어서 모든 자바 객체가 가진 메소드이다.
+  - `자바에서 모든 객체는 내부적으로 모니터를 가진다.`
 - 스레드가 어떤 객체의 wait() 메소드를 호출하면 해당 객체의 모니터 락을 획득하기 위해 대기 상태로 진입한다.
 - 스레드가 어떤 객치의 notify() 메소드를 호출하면 해당 객체의 모니터에 대기중인 쓰레드 하나를 깨운다.
   - notifyAll() 메소드를 호출하면 대기중인 스레드 전부를 깨운다.
@@ -48,6 +50,8 @@ public synchronized void add() {
 - `condition variables`
   - waiting queue를 가진다.
     - 조건이 충족되길 기다리는 스레드들이 대기 상태로 머무는 곳이다.
+  - 자바의 모니터는 condition variables를 하나만 가진다.
+  - 두가지 이상의 condition variable가 필요하다면 따로 구현이 필요하다.
 
 ### condition variables에서 주요 동작
 - `wait`
@@ -94,6 +98,7 @@ release(m);     // 모니터 락 반환
 3. T1이 lock을 반환하고 release()을 통해 Entry Queue에서 대기하고 있는 스레드를 깨움.
 
 <br>
+<br>
 
 - 조건에 따른 모니터 락 획득(acquire)과 반환(release)
 1. T1이 lock을 획득하여 critical section에 진입
@@ -116,8 +121,8 @@ release(m);     // 모니터 락 반환
     ![img_1.png](img/monitor/img_4.png)
 
 8. entry queue는 선입선출이 무조건이 아닌 OS 스케줄러가 어떤 선택을 하는지에 따라 대기하고 있는 스레드 중 하나가 다시 lock을 얻으려고 시도한다.
-9. 이때 T3가 signal()로 T2를 깨우고 T3가 계속 진행을 한다면 `signal and continue`라 하고 T3가 signal()로 T2로 깨우고 T2는 wait가 되고 T3가 시작하는 경우를 
-   `signal and wait`라고 한다.
+    - 이때 임계 영역에 있는 T3가 signal()로 T2를 깨우고 T3가 남은 작업을 계속 진행을 한다면 `signal and continue`라 하고
+    - T3가 signal()로 T2로 깨우고 T3는 남은 작업을 남겨둔채 wait가 되고, T2가 시작하는 경우를 `signal and wait`라고 한다.
 10. 운좋게 잠들었던 T2가 선택받았을 때 T2는 lock을 획득하고 T2가 멈췄던 wait(); 부분부터 다시 시작하게 된다.
 11. 그리고나서 다시 조건이 충족하는지 비교하게 된다. 잠들었다가 깨어났는데 조건을 다시 판별하는 이유?
     - OS에 따라 wait()한 스레드가 이유없이 깰 수도 있다. 그래서 스레드가 기다렸던 조건이 충족했는지 판별해야한다.
@@ -181,3 +186,56 @@ public class BoundedConsumerProducer {
 }
 
 ```
+
+<br>
+
+- 위 코드를 동기화 시키면 아래와 같다.
+
+```java
+public class BoundedBuffer {
+    private final int[] buffer = new int[5];
+    private int count = 0;
+
+    public synchronized void produce(int item) {
+        while (count == 5) {
+            wait();
+        }
+
+        buffer[count++] = item;
+        notify();
+    }
+    
+    public void consume() {
+        int item = 0;
+        // 파라미터 인스턴스인 자기자신의 mutex lock을 획득하고 임계영역으로 들어가라
+        synchronized (this) {
+            while (count == 0) {
+                wait();
+            }
+            
+            item = buffer[--count];
+            notify();
+        }
+        System.out.println("consume :" + item);
+    }
+    
+    public static void main(String[] args) {
+        BoundedBuffer buffer = new BoundedBuffer();
+        
+        Thread consumer = new Thread(() -> {
+            buffer.consume();
+        });
+        
+        Thread producer = new Thread(() -> {
+            buffer.produce(100);
+        });
+        
+        consumer.start();
+        producer.start();
+        
+        consumer.join();
+        producer.join();
+    }
+}
+```
+
