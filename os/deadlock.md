@@ -12,7 +12,7 @@
 3. 비선점 `No preemption`
     - 리소스 반환(release)은 오직 해당 리소스를 취득한 프로세스 / 스레드만 할 수 있다.
     - 즉, 다른 프로세스의 작업이 끝날 때 까지 리소스를 뺏을 수 없다.
-4. 순환 대기`Circular wait`
+4. 순환 대기 `Circular wait`
     - 프로세스들이 순환 (circular) 형태로 서로의 리소스를 기다린다.
    
 ## OS의 데드락 해결 방법
@@ -42,11 +42,55 @@
 <br>
 
 ### 3. 데드락 감지와 복구
+- 데드락을 허용하고 데드락이 발생하면 복구하는 전략
+1. 프로세스를 종료하는 방법이 있다.
+   - 데드락에 빠진 모든 프로세스를 종료한다.
+   - 혹은 하나씩 종료한다.
+   - 진행하고 있던 작업을 읽어버리기 때문에 거의 최후의 수단.
+2. 리소스의 일시적인 선점을 허용한다.
+   - 데드락이 발생했을 때 획득한 리소스를 일시적으로 다른 프로세스에게 양보하도록
 
 <br>
 
 ### 4. 데드락 무시
+- OS가 아몰랑 무시하는 방법도 있다.
 
+<br>
+
+### 자바 데드락 예제 코드
+```java
+public class Main {
+	public static void main(String[] args) {
+		Object lock1 = new Object();
+		Object lock2 = new Object();
+        
+		Thread t1 = new Thread(() -> {
+			synchronized (lock1) {
+				System.out.println("[t1] get lock1");
+				synchronized (lock2) {
+					System.out.println("[t1] get lock2");
+				}
+			}
+		});
+        
+		Thread t2 = new Thread(() -> {
+			synchronized (lock2) {
+				System.out.println("[t2] get lock2");
+                synchronized (lock1) {
+					System.out.println("[t2] get lock1");
+				}
+			}
+		});
+        
+		t1.start();
+		t2.start();
+	}
+}
+```
+- 이 문제를 해결하기 위해선 다음과 같은 방법이 있다.
+  - Circular wait가 존재하기 때문에 순서 체계를 부여해서 오름차순으로 리소스를 요청하는 방법도 고민해보자.
+    - lock1 -> lock2
+  - Hold and wait가 존재하기 때문에 중첩 synchronized를 밖으로 빼낸다.
 
 <br>
 <br>
@@ -89,3 +133,11 @@
   - 안정 상태에서 불안정 상태로 변경될 수 있다.
 - 불안정 상태 : OS가 할당해줄 수 있는 리소스가 부족해서 각 프로세스가 요구하는 리소스 요구량에 할당해주지 못하고 각 프로세스가 계속 대기하고 있는 교착 상태
   - 데드락은 불안정 상태에서만 발생한다.
+
+<br>
+
+### 은행원 알고리즘 단점
+1. 각 프로세스마다 최대 자원 요구량을 미리 알아야 한다.
+2. 쉬워보이지만 복잡하다.
+3. 프로세스는 유한한 시간에 자원을 반납해야한다.
+- 그래서 현재 채택하고 있는 방식은 아니라고 한다.
