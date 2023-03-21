@@ -167,7 +167,33 @@ int test_and_set(int* lockPtr) {
  * If multiple threads access a format concurrently, it must be synchronized externally.
 ```
 
+<br>
 
+### Java는 synchronized 키워드를 이용해 이미 동시성 제어가 가능한데 Atomic 클래스를 왜 제공하는거지?
+- synchronized
+  - 락 획득/해제는 반드시 메서드 수준이나 메서드 내부의 동기화 블록 안에서 이루어져야 함
+  - synchronized 블록에 진입하기 전에 CPU 캐시 메모리와 메인 메모리 값을 동기화하여 가시성을 해결
+  - 단점은 락을 얻지 못한 스레드는 블로킹됨, 서비스에 트래픽이 발생할 경우 심각한 성능 저하가 발생할 수 있다
+- Atomic 클래스
+  - 훨씬 작은 범위에 Lock을 걸 수 있게되고, volatile의 Read-Modify-Write 문제를 해결할 수 있다.
+  - Compare And Swap 알고리즘을 이용해서 락 프리하면서 NonBlocking으로 동작
+    - 이로인해 synchronized보다 효율적으로 동시성 및 원자성 보장
+  - 멀티쓰레드에서 write도 가능
+  - 다만 내부에서 루프를 이용해 CAS 작업을 반복적으로 재시도하기 때문에 비교 후 업데이트하는 작업이 실패할 경우를 대비해 내부적인 재시도 루프가 동반됨
+    - 변수를 업데이트하기 위해 여러 차례 재시도를 해야 할 경우, 그 횟수만큼 성능이 나빠짐
 
+### 동기화 처리 기법 중 성능이 뛰어난 Atomic을 사용하면 되지 않나?
+- 비교적 성능이 좋은 Atomic을 일반적으로 사용할 순 있지만 만능은 아니라고 생각한다. 상황에 따라 적절한 동기화 기법을 사용하면 될 것 같다.
+  - synchronized 는 스레드가 suspending과 resuming 하는데에 자원 소모가 발생하고,
+  - Atomic은 CAS 알고리즘을 이용해 성공적으로 변경할 때까지 무한 루프를 돌면서 자원 소모가 발생한다.
+- 문서에서도 Atomic 클래스들은 다음과 같이 설계 되어있다고 한다.
+```text
+Atomic classes are designed primarily as building blocks for implementing non-blocking data structures and related infrastructure classes.
+The compareAndSet method is not a general replacement for locking. It applies only when critical updates for an object are confined to a single variable.
 
-
+Atomic 클래스는 인프라 클래스들과 관련되어있고 non-blocking 데이터 구조를 구현하기 위해 설계되었다.
+CommpareAndSet 메서드는 락의 대체가 아니며,
+중요한 업데이트가 단일 변수로 제한되는 경우에만 적용된다.
+```
+- 즉, 많은 데이터에 대한 동시성을 관리하기에는 부적합해보인다.
+- ConcurrentHashMap은 CAS와 synchronized 두 개의 방식 모두 사용하고있다.
