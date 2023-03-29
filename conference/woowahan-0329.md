@@ -1,4 +1,5 @@
 # 테크 리더 3인이 말하는 개발자 원칙
+- [영상](https://www.youtube.com/watch?v=DJCmvzhFVOI&ab_channel=%EC%9A%B0%EC%95%84%ED%95%9C%ED%85%8C%ED%81%AC)
 
 ## 제어할 수 없는 것에 의존하지 않기 (이동욱)
 - 우리가 어떤 개발자가 될 수 있는가?
