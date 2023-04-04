@@ -36,3 +36,4 @@ Temporary Items
 .apdisk
 
 /.gradle/
+/multi-thread/build/
