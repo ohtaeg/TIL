@@ -1,4 +1,6 @@
 # block - non-block
+- **블록킹과 논블록킹은 프로세스의 유휴 상태에 대한 개념**
+- **동기와 비동기는 프로세스의 수행 순서 보장에 대한 매커니즘**으로 완전한 별개의 개념
 - I/O 종류
   - network (socket)
   - file
@@ -104,4 +106,24 @@
 - kqueue은 맥 OS에서 많이 사용
 - IOCP는 윈도우나 솔라리스 계열에서 사용
 
+<br><br>
 
+## select
+- Linux에서 소켓도 하나의 file descriptor로 생성되어 관리가 된다.
+- select 함수는 싱글 스레드로 file descriptor(소켓)의 변화를 관찰하는 함수이며, 파일 디스크립터는 OS에 의해 관리되는 대상
+- select 방식은 매번 kernel로부터 이벤트(입력, 출력, 에러)별로 감시할 file descriptor들을 fe_set이라는 파일 상태 테이블에 등록하고, 조사하는 방식 
+  - 파일들을 fe_set 이라는 파일 상태 테이블에 등록하고 등록된 파일에 이벤트가 발생한 경우 fd_set을 확인하는 방식
+
+### select의 장점
+- 사용하기가 비교적 쉽고
+- 지원 하는 OS가 많아 이식성이 좋다. (POSIX 표준)
+- 일반적으로 소켓수가 1500이하일때는 퍼모먼스 차이는 다른 I/O multiplexing 들과 거의 없는것 같다.
+  - select poll epoll 의 성능차이는 5000 이상부터 급격히 달라진다.
+
+### select의 한계
+- 검사할 수 있는 file descriptor 최대 갯수는 1024개로 제한된다.
+- I/O 준비가 된 file descriptor(소켓)들만 처리하려면 모든 file descriptor를 순회하면서 처리해야함
+- select 함수를 호출할 때 마다 매번 OS에게 관리 대상인 file descriptor 배열 전체에 대한 정보들을 전달해야함
+  - 관찰대상의 정보를 줘야한다?? => select 호출 시 정보를 운영체제에 전달한다는 것
+  - select 호출시 fd_set에 변화가 생기므로 select를 호출 전에 fd_set의 원본을 복사하고 계속 select 호출 시 새롭게 관찰 대상의 정보를 줘야한다.
+  - 즉, 커널과 유저 공간 사이에 여러번의 데이터 복사가 있다는 뜻이고, 운영체제에 정보를 전달하는 것은 오버로드가 크다.
