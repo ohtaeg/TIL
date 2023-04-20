@@ -7,14 +7,13 @@ import java.io.IOException;
 
 public class Main {
 
-    public static final String SOURCE_FILE = Main.class.getClassLoader().getResource("many-flowers.jpg").getPath();
-    public static final String DESTINATION_FILE = "./many-purples-flowers.jpg";
+    public static final String SOURCE_FILE = "./multi-thread/src/main/resources/many-flowers.jpg";
+    public static final String DESTINATION_FILE = "./multi-thread/src/main/resources/many-purples-flowers.jpg";
 
     public static void main(String[] args) throws IOException {
         // 픽셀, 컬러스페이스, 디멘션 등 이미지 데이터 표현과 픽셀 조작이 가능한 이미지 객체
         BufferedImage original = ImageIO.read(new File(SOURCE_FILE));
         BufferedImage output = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
-
 
         recolorSingleThreaded(original, output);
 
