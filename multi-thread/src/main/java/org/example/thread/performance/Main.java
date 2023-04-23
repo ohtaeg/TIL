@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -15,7 +17,11 @@ public class Main {
         BufferedImage original = ImageIO.read(new File(SOURCE_FILE));
         BufferedImage output = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-        recolorSingleThreaded(original, output);
+        long startTime = System.currentTimeMillis();
+        // recolorSingleThreaded(original, output);
+        recolorMultiThreaded(original, output, 8);
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
 
         File result = new File(DESTINATION_FILE);
         ImageIO.write(output, "jpg", result);
@@ -24,6 +30,35 @@ public class Main {
     // 싱글 스레드를 통해 왼쪽 상단부터 색칠
     public static void recolorSingleThreaded(BufferedImage originalImage, BufferedImage resultImage) {
         recolorImage(originalImage, resultImage, 0, 0, originalImage.getWidth(), originalImage.getHeight());
+    }
+
+    // 멀티 스레드를 통해 전체 높이를 스레드 수로 나눠서 이미지를 분할하여 병렬 처리
+    public static void recolorMultiThreaded(BufferedImage originalImage, BufferedImage resultImage, int numberOfThreads) {
+        List<Thread> threads = new ArrayList<>();
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight() / numberOfThreads;
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            final int threadMultiplier = i;
+            threads.add(new Thread(() -> {
+                int leftCorner = 0;
+                int topCorner = height * threadMultiplier;
+                recolorImage(originalImage, resultImage, leftCorner, topCorner, width, height);
+            }));
+        }
+
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
     /**
