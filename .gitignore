@@ -37,3 +37,5 @@ Temporary Items
 
 /.gradle/
 /multi-thread/build/
+/multi-thread/src/main/java/org/example/thread/performance/throughput/search_words.csv
+/multi-thread/src/main/resources/war_and_peace.txt

@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class Main {
 
     private static final String INPUT_FILE = "./multi-thread/src/main/resources/war_and_peace.txt";
-    private static final int POOL_SIZE = 1;
+    private static final int POOL_SIZE = 12;
 
     public static void main(String[] args) throws IOException {
         String text = new String(Files.readAllBytes(Paths.get(INPUT_FILE)));
