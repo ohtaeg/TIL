@@ -174,3 +174,70 @@ Update Mode: read-only
 - 컨트롤러는 SSL과 broker1.example.com:9094를 사용해 브로커와 연결하게 된다.
 - 이 설정을 명시하지 않으면 디폴트 값은 null이고 컨트롤러 커넥션을 위한 엔드포인트를 사용하지 않는다.
 - 만약 설정을 명시한다면 `inter.broker.listener.name` 값과 같을 수 없다.
+
+-----
+
+### delete.topic.enable
+```
+Enables delete topic.
+Delete topic through the admin tool will have no effect if this config is turned off
+
+Type:	      boolean
+Default:	  true
+Valid Values:
+Importance:	  high
+Update Mode:  read-only
+```
+- 토픽 삭제를 활성화
+- 만약 이 설정을 끈다면 어드민 툴을 통해 토픽을 삭제해도 영향이 없다.
+
+---
+
+### leader.imbalance.check.interval.seconds
+```
+The frequency with which the partition rebalance check is triggered by the controller
+
+Type:	long
+Default:	300
+Valid Values:	[1,...]
+Importance:	high
+Update Mode:	read-only
+```
+- 컨트롤러에 의해 파티션 리밸런스 체크할 주기 
+
+---
+
+### leader.imbalance.per.broker.percentage
+```
+The ratio of leader imbalance allowed per broker.
+The controller would trigger a leader balance if it goes above this value per broker.
+The value is specified in percentage.
+```
+- 브로커 당 허용하는 리더 불균형 비율 
+- 만약 브로커 당 이 값이 초과하면 컨트롤러는 리더 밸런스를 트리거한다.
+- 이 값은 백분율로 지정한다.
+
+----
+
+### listeners
+```
+Listener List - Comma-separated list of URIs we will listen on and the listener names. 
+If the listener name is not a security protocol, listener.security.protocol.map must also be set.
+Listener names and port numbers must be unique.
+Specify hostname as 0.0.0.0 to bind to all interfaces.
+Leave hostname empty to bind to default interface.
+
+Examples of legal listener lists:
+
+PLAINTEXT://myhost:9092,SSL://:9091
+CLIENT://0.0.0.0:9092,REPLICATION://localhost:9093
+```
+- 리스너 리스트 - URI 리스트와 리스너 이름들은 쉼표로 구분한다.
+- 만약 리스터 이름이 보안 프로토콜이 아니라면, `listener.security.protocol.map` 옵션을 함께 설정해야한다.
+- 리스너 이름과 포트는 유니크해야한다.
+- 모든 인터페이스에 바인드하려면 호스트명을 0.0.0.0 으로 지정해라
+- 디폴트 인터페이스와 바인드하기 위해선 호스트 명을 비워야한다.
+
+
+
+
