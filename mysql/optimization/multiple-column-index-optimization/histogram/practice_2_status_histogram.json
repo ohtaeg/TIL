@@ -1,0 +1,23 @@
+{
+  "buckets":[
+    [
+      "base64:type254:67Cw7IahIOyZhOujjA==",
+      0.3324731182795699
+    ],
+    [
+      "base64:type254:67Cw7IahIOykkQ==",
+      0.6672939068100359
+    ],
+    [
+      "base64:type254:7KO866y4IOy3qOyGjA==",
+      1.0
+    ]
+  ],
+  "data-type":"string",
+  "null-values":0.0,
+  "collation-id":255,
+  "last-updated":"2024-01-21 14:41:16.693843",
+  "sampling-rate":0.06116405621329071,
+  "histogram-type":"singleton",
+  "number-of-buckets-specified":100
+}
