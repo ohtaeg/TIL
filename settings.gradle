@@ -2,4 +2,5 @@ include 'spring'
 include 'spring-restdocs'
 include 'multi-thread'
 include 'java'
+include 'redis'
 
