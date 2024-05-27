@@ -10,13 +10,13 @@
 ## socket
 - 네트워크 통신은 socket을 통해 데이터 입출력
 - 백엔드 서버들은 네트워크 상의 요청자들과 각각 소켓을 열고 통신한다.
-- 특정 포트를 통해 양방향 통신이 가능하도록 만들어주는 추상화된 장치
+- `특정 포트를 통해 양방향 통신이 가능하도록 만들어주는 추상화된 장치`
 
 
 ## block I/O
 - I/O 작업을 요청한 프로세스/스레드는 요청이 완료될 때까지 블락됨
   
-  ![img.png](img%2Fblock%2Fimg.png)
+  ![img.png](img/block/img.png)
 
 1. read blocking system call
 2. read system call로 인해 kernel 모드로 전환 (context switching)
