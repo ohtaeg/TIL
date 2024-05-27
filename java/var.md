@@ -11,8 +11,8 @@
 - 자바 코드 작성과 관련된 의식을 줄임으로써 개발자 경험을 개선
 
 <br>
+<br>
 
-----
 
 ## 장점
 ### 가독성
@@ -36,12 +36,12 @@ var outputStream = new ByteArrayOutputStream();
 
 ```java
 // @Nonnull 어노테이션에 의해 person 파라미터는 널체크가 가능해진다.
-Consumer<Person> personConsumer = (@Nonnull var person) -> {};
+Consumer<Person> personConsumer = (@NonNull var person) -> {};
+
 ```
 
 <br>
-
-----
+<br>
 
 ## 단점
 ### 가독성
@@ -98,8 +98,7 @@ var list = List.of(BigInteger.ZERO);
 - 이런 경우는 var 변수 도입에 어긋나는 행위이다. 코드는 스스로 읽혀야하며, 도구의 도움없이 이해할 수 있어야한다.
 
 <br>
-
-----
+<br>
 
 ## 주의해야할 점
 ### null 할당
@@ -109,12 +108,10 @@ var list = List.of(BigInteger.ZERO);
 
 컴파일 시점에 해당 var 변수가 나중에 초기화하는지, 어떤 유형을 원하는지 알 수 없기 때문
 
-----
-
 <br>
-
-
-
+<br>
+<br>
 
 ### Reference
 - [JEP-286](https://openjdk.org/jeps/286)
+- [백선장님 유튜브](https://www.youtube.com/watch?v=tjj-XLk4CSA&ab_channel=%EB%B0%B1%EA%B8%B0%EC%84%A0)
