@@ -50,3 +50,14 @@ $ HINCRBY ohtaeg age 1
 $ HINCRBY ohtaeg name 1
 ```
 
+<br>
+
+## 로그인 세션
+- 로그인 상태를 유지하기 위한 기술, 서버에서는 유저를 식별하기 위해 세션 id를 사용하고 해당 세션 id로 인증없이 사용자 식별
+- 로그인시 동시 로그인 제한에도 사용, 새로운 사용자가 로그인 요청을 하면 유효한 세션의 갯수를 확인하여 동시에 로그인 가능한 디바이스 갯수 제한
+
+1. login request
+2. HSET abcd id ohtaeg grade premium
+3. Set-cookie response (sessionId: abcd)
+4. 
+

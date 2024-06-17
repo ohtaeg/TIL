@@ -91,3 +91,7 @@ $ SADD user:2:fruits apple lemon
 -- [apple banana orange lemon]
 $ SUNION user:1:fruits user:2:fruits 
 ```
+
+## 장바구니
+- 장바구니 데이터는 수시로 변경될 수 있고, 결제까지 가지 않을 수 있다.
+- Set을 이용하여 임시 데이터성으로, 그리고 중복 데이터 관리가 쉬어진다.

@@ -104,3 +104,29 @@ $ ZRANK points C
 -- 2
 ```
 
+## ZRANGEBYSCORE
+- redis score 조건을 만족하면 sorted set에서 지우는 명령어
+- 일정 시간동안 n회 이상 인증을 한 로그, 1일 이상 지난 데이터들 무효화 등에 사용될 수 있다.
+- 삭제할 위치를 찾는 데 걸리는 시간이 O(log(n)), 삭제하는 시간이 O(m)이기에 느리편
+
+## Sliding Window Rate Limiter
+- Fixed Window Rate Limiter와 달리 시간에 따라 Window를 이동시켜 동적으로 요청수를 조절하는 기능
+- Fixed Window Rate Limiter는 보통 시간마다 허용량이 초기화 되지만,
+- Sliding Window Rate Limiter는 시간이 경과함에 따라 window가 같이 움직인다.
+  - 스코어를 timestamp로 이용한다.
+
+1. 사용자가 0시0분10초에 요청을 하였다고 가정
+2. 현재까지의 요청을 세기 위해 슬라이딩 윈도우를 통해 60초 이전에 추가된 기록 제거
+3. ZCARD 명령어를 통해 남은 데이터의 카디널리티를 계산하여 요청이 가능한 범위라면
+4. ZADD 명령어를 통해 해당 요청을 기록 및 expire 초기화
+
+
+```redis
+MULTI
+    ZREMRANGEBYSCORE $ip 0 ($currentTime - $slidingwindow)
+    ZCARD $ip
+    ZADD $ip $$currentTime $currentTime
+    EXPIRE $ip $slidingwindow
+EXEC
+```
+
