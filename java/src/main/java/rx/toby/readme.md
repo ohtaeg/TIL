@@ -108,8 +108,16 @@ public interface Subscriber<T> {
 ### `Processor`
 
 
+### Operator
+- Publisher -> [Data1] -> multiplyOperator -> [Data2 * 10] -> negativeOperator -> [-Data3] -> Subscriber
+- 중간에 데이터를 가공
+
+![img.png](images/img.png)
+
+
 ## REF
 - [reactive-streams](https://www.reactive-streams.org/)
+- [reactor](https://projectreactor.io/docs/core/release/reference/)
 - [토비의 봄 5회 스프링 리액티브 프로그래밍 (1) - Reactive Streams](https://www.youtube.com/watch?v=8fenTR3KOJo&list=PLOLeoJ50I1kkqC4FuEztT__3xKSfR2fpw&index=1&ab_channel=%ED%86%A0%EB%B9%84%EC%9D%98%EC%8A%A4%ED%94%84%EB%A7%81)
 - [블로그](https://jongmin92.github.io/2019/11/05/Java/reactive-1/)
 - [블로그](https://bgpark.tistory.com/160)
