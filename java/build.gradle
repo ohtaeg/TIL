@@ -18,6 +18,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     implementation("io.projectreactor:reactor-core:3.4.0")
+    // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-core
+    implementation("org.openjdk.jmh:jmh-core")
+    // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-generator-annprocess
+    annotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:1.37")
 }
 
 test {
